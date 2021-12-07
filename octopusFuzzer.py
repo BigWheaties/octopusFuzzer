@@ -464,6 +464,20 @@ def fuzzDeployment(driver):
     except:
         print("ERROR: FAILED TO CONFIGURE READINESS GATES")
         
+    # fetch generated YAML file from webpage and save it
+    webpageOutput = driver.find_element_by_id('yaml').text
+    newFileName = "fuzz" + str(loopCounter) + ".yaml"
+    try:
+        print("Creating file " + str(loopCounter) + "...")
+        newFilePointer = open(newFileName, "w")
+        newFilePointer.write(webpageOutput)
+        newFilePointer.close()
+    except:
+        print("ERROR: FAILED TO CREATE THE FILE " + newFileName + ".  NO INFORMATION WRITTEN TO TARGET.")
+    
+    # close the tab
+    driver.close()    
+    
 '''    # IMPLEMENT AT A LATER DATE
 # a function to fuzz a YAML file for a stateful set
 def fuzzStatefulSet():
@@ -513,20 +527,6 @@ while loopCounter < numFilesNeeded:
     elif fuzzSelection == 2:
         fuzzDaemonSet()
     '''
-    
-    # fetch generated YAML file from webpage and save it
-    webpageOutput = str(driver.find_element_by_id('yaml').text())
-    newFileName = "fuzz" + str(loopCounter) + ".yaml"
-    try:
-        print("Creating file " + str(loopCounter) + "...")
-        newFilePointer = open(newFileName, "w")
-        newFilePointer.write(webpageOutput)
-        newFilePointer.close()
-    except:
-        print("ERROR: FAILED TO CREATE THE FILE " + newFileName + ".  NO INFORMATION WRITTEN TO TARGET.")
-    
-    # close the tab
-    driver.close()    
     
     # keep track of number of files created
     loopCounter += 1
