@@ -1,26 +1,14 @@
-'''BROWSER = 'chrome'
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-driver = webdriver.Firefox()
-driver.get("http://www.python.org")
-assert "Python" in driver.title
-elem = driver.find_element_by_name("q")
-elem.clear()
-elem.send_keys("pycon")
-elem.send_keys(Keys.RETURN)
-assert "No results found." not in driver.page_source
-driver.close()'''
 #input: python3 octopusFuzzer.py numFiles
-#all inputs are assumed to be correctly formatted internally and when the function is called
 
 ''' Declare functions '''
 # a function to expand all container divs on the page
 def expandDivs():
-    for i in range(0, 20):
-        try:
-            driver.find_element_by_xpath("//button[@aria-expanded='false']").click()
-        except:
-            #do nothing, just prevents errors
+    try:
+        divsToExpand = driver.find_elements_by_class_name("style_clickable__2rbjz")
+        for div in divsToExpand:
+            div.click()
+    except:
+        print("ERROR: PROBLEM EXPANDING DIV")
             
 # a function to produce ASCII fuzz 
 def fuzz(minChars, maxChars):
@@ -38,37 +26,78 @@ def fuzzDeployment(driver):
     
     # select deployment as resource type
     try:
-        driver.find_element_by_xpath("//input[@value='Deployment']").click() 
+        driver.find_element_by_xpath("//*[@id=\"app\"]/div/div[2]/div/div[1]/div[2]/div/div/div/div/div[2]/div[1]/input").click() 
     except:
         print("ERROR: FAILED TO SELECT DEPLOYMENT RESOURCE TYPE")
         
     # enter details for deployment
     try:
-        deploymentName = driver.find_element_by_name('Deployment name')
-        deploymentName.sendKeys(fuzz(0, 50))
+        deploymentName = driver.find_element_by_name("Deployment name")
+        deploymentName.clear()
+        deploymentName.send_keys(fuzz(0, 50))
+
+        numReplicas = driver.find_element_by_name("Replicas")
+        numReplicas.clear()
+        numReplicas.send_keys(fuzz(0, 50))
         
-        numReplicas = driver.find_element_by_name('Replicas')
-        numReplicas.sendKeys(fuzz(0, 50))
+        revisionLimit = driver.find_element_by_name("Revision history limit")
+        revisionLimit.clear()
+        revisionLimit.send_keys(fuzz(0, 50))
         
-        revisionLimit = driver.find_element_by_name('Revision history limit')
-        revisionLimit.sendKeys(fuzz(0, 50))
+        progressionDeadline = driver.find_element_by_name("Progression deadline in seconds")
+        progressionDeadline.clear()
+        progressionDeadline.send_keys(fuzz(0, 50))
         
-        progressionDeadline = driver.find_element_by_name('Progression deadline in seconds')
-        progressionDeadline.sendKeys(fuzz(0, 50))
+        terminationGracePeriod = driver.find_element_by_name("Pod termination grace period in seconds")
+        terminationGracePeriod.clear()
+        terminationGracePeriod.send_keys(fuzz(0, 50))
         
-        terminationGracePeriod = driver.find_element_by_name('Pod termination grace period in seconds')
-        terminationGracePeriod.sendKeys(fuzz(0, 50))
         
         numLabels = random.randint(0, 5)
-        for i in range(numLabels):
-            try:
-                driver.find_element_by_xpath("//button[@title='Add Label']").click() 
-                labelNameTarget = driver.find_element_by_xpath("//button[@name='Name' and @value='']")
-                labelNameTarget.sendKeys(fuzz(0, 50))
-                labelValueTarget = driver.find_element_by_xpath("//button[@name='Value']")
-                labelValueTarget.sendKeys(fuzz(0, 50))
-            except:
-                print("ERROR: FAILED TO PROPERLY CREATE LABELS IN DEPLOYMENT DETAILS")
+        if numLabels != 0:
+            for i in range(numLabels):
+                try:
+                    driver.find_element_by_xpath("//button[@title='Add Label']").click() 
+                    
+                    if i == 0:
+                        labelNameTarget = driver.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/span/div[1]/div[2]/div/div/div/div[16]/div[2]/div[1]/div/div[1]/div[1]/div/div[1]/div/div/div/input")
+                        labelNameTarget.clear()
+                        labelNameTarget.send_keys(fuzz(0, 50))
+                        labelValueTarget = driver.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/span/div[1]/div[2]/div/div/div/div[16]/div[2]/div[1]/div/div[1]/div[2]/div/div[1]/div/div/div/input")
+                        labelValueTarget.clear()
+                        labelValueTarget.send_keys(fuzz(0, 50))
+                    
+                    elif i == 1:
+                        labelNameTarget = driver.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/span/div[1]/div[2]/div/div/div/div[16]/div[2]/div[2]/div/div[1]/div[1]/div/div[1]/div/div/div/input")
+                        labelNameTarget.clear()
+                        labelNameTarget.send_keys(fuzz(0, 50))
+                        labelValueTarget = driver.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/span/div[1]/div[2]/div/div/div/div[16]/div[2]/div[2]/div/div[1]/div[2]/div/div[1]/div/div/div/input")
+                        labelValueTarget.clear()
+                        labelValueTarget.send_keys(fuzz(0, 50))
+                        
+                    elif i == 2:
+                        labelNameTarget = driver.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/span/div[1]/div[2]/div/div/div/div[16]/div[2]/div[3]/div/div[1]/div[1]/div/div[1]/div/div/div/input")
+                        labelNameTarget.clear()
+                        labelNameTarget.send_keys(fuzz(0, 50))
+                        labelValueTarget = driver.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/span/div[1]/div[2]/div/div/div/div[16]/div[2]/div[3]/div/div[1]/div[2]/div/div[1]/div/div/div/input")
+                        labelValueTarget.clear()
+                        labelValueTarget.send_keys(fuzz(0, 50))                    
+                    elif i == 3:
+                        labelNameTarget = driver.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/span/div[1]/div[2]/div/div/div/div[16]/div[2]/div[4]/div/div[1]/div[1]/div/div[1]/div/div/div/input")
+                        labelNameTarget.clear()
+                        labelNameTarget.send_keys(fuzz(0, 50))
+                        labelValueTarget = driver.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/span/div[1]/div[2]/div/div/div/div[16]/div[2]/div[4]/div/div[1]/div[2]/div/div[1]/div/div/div/input")
+                        labelValueTarget.clear()
+                        labelValueTarget.send_keys(fuzz(0, 50))                    
+                    elif i == 4:
+                        labelNameTarget = driver.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/span/div[1]/div[2]/div/div/div/div[16]/div[2]/div[5]/div/div[1]/div[1]/div/div[1]/div/div/div/input")
+                        labelNameTarget.clear()
+                        labelNameTarget.send_keys(fuzz(0, 50))
+                        labelValueTarget = driver.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/span/div[1]/div[2]/div/div/div/div[16]/div[2]/div[5]/div/div[1]/div[2]/div/div[1]/div/div/div/input")
+                        labelValueTarget.clear()
+                        labelValueTarget.send_keys(fuzz(0, 50))
+                except:
+                    print("ERROR: FAILED TO PROPERLY CREATE LABELS IN DEPLOYMENT DETAILS")
     except:
         print("ERROR: FAILED TO PROPERLY ENTER DETAILS FOR DEPLOYMENT")
     
@@ -76,43 +105,76 @@ def fuzzDeployment(driver):
     try:
         deploymentStrategyInt = random.randint(0, 1)
         if deploymentStrategyInt == 0:
-            driver.find_element_by_xpath("//input[@value='Recreate']").click() 
-        if deploymentStrategyInt == 1:
-            driver.find_element_by_xpath("//input[@value='RollingUpdate']").click()
-            driver.find_element_by_name("Max Unavailable").sendKeys(fuzz(0, 50))
-            driver.find_element_by_name("Max Surge").sendKeys(fuzz(0, 50))
+            driver.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/span/div[2]/div[2]/div/div/div/div/div[2]/div[1]/input").click() 
+        else:
+            driver.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/span/div[2]/div[2]/div/div/div/div/div[2]/div[5]/input").click()
+            maxUnavailableTarget = driver.find_element_by_name("Max Unavailable")
+            maxUnavailableTarget.clear()
+            maxUnavailableTarget.send_keys(fuzz(0, 50))
+            maxSurgeTarget = driver.find_element_by_name("Max Surge")
+            maxSurgeTarget.clear()
+            maxSurgeTarget.sendKeys(fuzz(0, 50))
     except:
         print("ERROR: DEPLOYMENT STRATEGY SELECTION FAILED")
         
     # add volumes
     try:
         driver.find_element_by_xpath("//button[@title='Add Volume']").click() 
-        # ! - TODO the window that pops up has things to address
+        volumeType = random.randint(0, 5)
+        
+        # config map
+        if volumeType == 0:
+
+        # secret
+        elif volumeType == 1:
+        
+        # empty dir
+        elif volumeType == 2:
+        
+        # host path
+        elif volumeType == 3:
+
+        # persistent volume claim
+        elif volumeType == 4:
+
+        # raw YAML
+        elif volumeType == 5:    
     except:
         print("ERROR: VOLUME ADDITION FAILED")
         
-    # manage containers
-    try:
-        # ! - EXTREMELY COMPLEX AND DIFFICULT
-    
+    # manage containers --- EXTREMELY COMPLEX AND DIFFICULT!  IMPLEMENT AT A LATER DATE
+
     # manage DNS policy
     try:
-        dnsPolicySelection = random.randint(0, 3)
-        if dnsPolicySelection == 0:
-            labelValueTarget = driver.find_element_by_xpath("//input[@value='ClusterFirst']")
-        elif dnsPolicySelection == 1:
-            labelValueTarget = driver.find_element_by_xpath("//input[@value='ClusterFirstWithHostNet']")
-        elif dnsPolicySelection == 2:
-            labelValueTarget = driver.find_element_by_xpath("//input[@value='Default']")
-        elif dnsPolicySelection == 3:
-            labelValueTarget = driver.find_element_by_xpath("//input[@value='None']")
-        labelValueTarget.click()
+        dnsPolicySelectionInt = random.randint(0, 3)
+        if dnsPolicySelectionInt == 0:
+            dnsPolicySelectionChoice = driver.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/div[4]/div[2]/div/div/div/div[1]/div[1]/div[2]/div[1]/input")
+        elif dnsPolicySelectionInt == 1:
+            dnsPolicySelectionChoice = driver.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/div[4]/div[2]/div/div/div/div[1]/div[1]/div[2]/div[3]/input")
+        elif dnsPolicySelectionInt == 2:
+            dnsPolicySelectionChoice = driver.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/div[4]/div[2]/div/div/div/div[1]/div[1]/div[2]/div[5]/input")
+        elif dnsPolicySelectionInt == 3:
+            dnsPolicySelectionChoice = driver.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/div[4]/div[2]/div/div/div/div[1]/div[1]/div[2]/div[7]/input")
+        dnsPolicySelectionChoice.click()
     except:
         print("ERROR: DNS POLICY SELECTION FAILED")
     
     # manage DNS config
     try:
-        # ! - TODO
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
     except:
         print("ERROR: DNS CONFIG FAILED")
     
@@ -148,25 +210,113 @@ def fuzzDeployment(driver):
     
     # manage pod annotations
     try:
-        # ! - TODO, functionally similar to other name/value sections
+        numAnnotations = random.randint(0, 5)
+        if numAnnotations != 0:
+            for i in range(numAnnotations):
+                driver.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/div[11]/div[2]/div/div/div/div/div[1]/div/button").click() 
+                    
+                if i == 0:
+                    annotationNameTarget = driver.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/div[11]/div[2]/div/div/div/div/div[2]/div[1]/div/div[1]/div[1]/div/div[1]/div/div/div/input")
+                    annotationNameTarget.clear()
+                    annotationNameTarget.send_keys(fuzz(0, 50))
+                    annotationValueTarget = driver.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/div[11]/div[2]/div/div/div/div/div[2]/div[1]/div/div[1]/div[2]/div/div[1]/div/div/div/input")
+                    annotationValueTarget.clear()
+                    annotationValueTarget.send_keys(fuzz(0, 50))
+                    
+                elif i == 1:
+                    annotationNameTarget = driver.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/div[11]/div[2]/div/div/div/div/div[2]/div[2]/div/div[1]/div[1]/div/div[1]/div/div/div/input")
+                    annotationNameTarget.clear()
+                    annotationNameTarget.send_keys(fuzz(0, 50))
+                    annotationValueTarget = driver.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/div[11]/div[2]/div/div/div/div/div[2]/div[2]/div/div[1]/div[2]/div/div[1]/div/div/div/input")
+                    annotationValueTarget.clear()
+                    annotationValueTarget.send_keys(fuzz(0, 50))
+                        
+                elif i == 2:
+                    annotationNameTarget = driver.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/div[11]/div[2]/div/div/div/div/div[2]/div[3]/div/div[1]/div[1]/div/div[1]/div/div/div/input")
+                    annotationNameTarget.clear()
+                    annotationNameTarget.send_keys(fuzz(0, 50))
+                    annotationValueTarget = driver.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/div[11]/div[2]/div/div/div/div/div[2]/div[3]/div/div[1]/div[2]/div/div[1]/div/div/div/input")
+                    annotationValueTarget.clear()
+                    annotationValueTarget.send_keys(fuzz(0, 50))                    
+                elif i == 3:
+                    annotationNameTarget = driver.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/div[11]/div[2]/div/div/div/div/div[2]/div[4]/div/div[1]/div[1]/div/div[1]/div/div/div/input")
+                    annotationNameTarget.clear()
+                    annotationNameTarget.send_keys(fuzz(0, 50))
+                    annotationValueTarget = driver.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/div[11]/div[2]/div/div/div/div/div[2]/div[4]/div/div[1]/div[2]/div/div[1]/div/div/div/input")
+                    annotationValueTarget.clear()
+                    annotationValueTarget.send_keys(fuzz(0, 50))                    
+                elif i == 4:
+                    annotationNameTarget = driver.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/div[11]/div[2]/div/div/div/div/div[2]/div[5]/div/div[1]/div[1]/div/div[1]/div/div/div/input")
+                    annotationNameTarget.clear()
+                    annotationNameTarget.send_keys(fuzz(0, 50))
+                    annotationValueTarget = driver.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/div[11]/div[2]/div/div/div/div/div[2]/div[5]/div/div[1]/div[2]/div/div[1]/div/div/div/input")
+                    annotationValueTarget.clear()
+                    annotationValueTarget.send_keys(fuzz(0, 50))
+            except:
+                print("ERROR: FAILED TO PROPERLY CREATE DEPLOYMENT ANNOTATIONS")
     except:
         print("ERROR: POD ANNOTATION FAILED")
     
     # manage deployment annotations
     try:
-        # ! - TODO, functionally similar to other name/value sections
-    except:
-        print("ERROR: DEPLOYMENT ANNOTATION FAILED")
+        numAnnotations = random.randint(0, 5)
+        if numAnnotations != 0:
+            for i in range(numAnnotations):
+                driver.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/div[12]/div[2]/div/div/div/div/div[1]/div/button").click() 
+                    
+                if i == 0:
+                    annotationNameTarget = driver.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/div[12]/div[2]/div/div/div/div/div[2]/div[1]/div/div[1]/div[1]/div/div[1]/div/div/div/input")
+                    annotationNameTarget.clear()
+                    annotationNameTarget.send_keys(fuzz(0, 50))
+                    annotationValueTarget = driver.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/div[12]/div[2]/div/div/div/div/div[2]/div[1]/div/div[1]/div[2]/div/div[1]/div/div/div/input")
+                    annotationValueTarget.clear()
+                    annotationValueTarget.send_keys(fuzz(0, 50))
+                    
+                elif i == 1:
+                    annotationNameTarget = driver.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/div[12]/div[2]/div/div/div/div/div[2]/div[2]/div/div[1]/div[1]/div/div[1]/div/div/div/input")
+                    annotationNameTarget.clear()
+                    annotationNameTarget.send_keys(fuzz(0, 50))
+                    annotationValueTarget = driver.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/div[12]/div[2]/div/div/div/div/div[2]/div[2]/div/div[1]/div[2]/div/div[1]/div/div/div/input")
+                    annotationValueTarget.clear()
+                    annotationValueTarget.send_keys(fuzz(0, 50))
+                        
+                elif i == 2:
+                    annotationNameTarget = driver.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/div[12]/div[2]/div/div/div/div/div[2]/div[3]/div/div[1]/div[1]/div/div[1]/div/div/div/input")
+                    annotationNameTarget.clear()
+                    annotationNameTarget.send_keys(fuzz(0, 50))
+                    annotationValueTarget = driver.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/div[12]/div[2]/div/div/div/div/div[2]/div[3]/div/div[1]/div[2]/div/div[1]/div/div/div/input")
+                    annotationValueTarget.clear()
+                    annotationValueTarget.send_keys(fuzz(0, 50))                    
+                elif i == 3:
+                    annotationNameTarget = driver.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/div[12]/div[2]/div/div/div/div/div[2]/div[4]/div/div[1]/div[1]/div/div[1]/div/div/div/input")
+                    annotationNameTarget.clear()
+                    annotationNameTarget.send_keys(fuzz(0, 50))
+                    annotationValueTarget = driver.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/div[12]/div[2]/div/div/div/div/div[2]/div[4]/div/div[1]/div[2]/div/div[1]/div/div/div/input")
+                    annotationValueTarget.clear()
+                    annotationValueTarget.send_keys(fuzz(0, 50))                    
+                elif i == 4:
+                    annotationNameTarget = driver.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/div[12]/div[2]/div/div/div/div/div[2]/div[5]/div/div[1]/div[1]/div/div[1]/div/div/div/input")
+                    annotationNameTarget.clear()
+                    annotationNameTarget.send_keys(fuzz(0, 50))
+                    annotationValueTarget = driver.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/div[12]/div[2]/div/div/div/div/div[2]/div[5]/div/div[1]/div[2]/div/div[1]/div/div/div/input")
+                    annotationValueTarget.clear()
+                    annotationValueTarget.send_keys(fuzz(0, 50))
+            except:
+                print("ERROR: FAILED TO PROPERLY CREATE DEPLOYMENT ANNOTATIONS")
     
     # manage service account name
     try:
-        driver.find_element_by_name("Service Account Name").sendKeys(fuzz(0, 50))
+        serviceAccountNameTarget = driver.find_element_by_name("Service Account Name")
+        serviceAccountNameTarget.clear()
+        serviceAccountNameTarget.send_keys(fuzz(0, 50))
     except:
         print("ERROR: SERVICE ACCOUNT NAME CONFIGURATION FAILED")
     
     # manage readiness gates
     try:
-        driver.find_element_by_name("Pod readiness gates").sendKeys(fuzz(0, 50))
+        readinessGateTarget = driver.find_element_by_name("Pod readiness gates")
+        readinessGateTarget.clear()
+        readinessGateTarget.send_keys(fuzz(0, 50))
     except:
         print("ERROR: FAILED TO CONFIGURE READINESS GATES")
         
@@ -182,7 +332,6 @@ def fuzzDaemonSet():
 # import libraries
 import selenium 
 import sys
-import os
 import random
 
 # declare variables
@@ -194,17 +343,19 @@ numFilesNeeded = int(sys.argv[1])
 # generate random seed
 random.seed()
 
-# initiate Selenium objects
-            # ! - TODO
-
-
 # create the desired number of fuzzed files
 while loopCounter < numFilesNeeded:
+    print("Generating file " + str(loopCounter) + "...")
+
+    # initiate Selenium objects
+    driver = webdriver.Firefox()
+
     # get page for fuzzing
-            # ! - TODO
+    driver.get("https://k8syaml.com/")
     
+    # call the fuzzing function
     fuzzDeployment(driver)
-    ''' # IMPLEMENT AT A LATER DATE
+    ''' IMPLEMENT AT A LATER DATE
     # pick and call a fuzzing function
     fuzzSelection = random.randint(0, 2)
     if fuzzSelection == 0:
@@ -216,14 +367,19 @@ while loopCounter < numFilesNeeded:
     '''
     
     # fetch generated YAML file from webpage and save it
-    webpageOutput = str(driver.find_element_by_id('yaml'))
+    webpageOutput = str(driver.find_element_by_id('yaml').text())
     newFileName = "fuzz" + str(loopCounter) + ".yaml"
     try:
-        print("Creating file " + str(loopCounter + 1) + "...")
+        print("Creating file " + str(loopCounter) + "...")
         newFilePointer = open(newFileName, "w")
         newFilePointer.write(webpageOutput)
         newFilePointer.close()
     except:
         print("ERROR: FAILED TO CREATE THE FILE " + newFileName + ".  NO INFORMATION WRITTEN TO TARGET.")
-        
+    
+    # close the tab
+    driver.close()    
+    
+    # keep track of number of files created
     loopCounter += 1
+print("File generation complete")
