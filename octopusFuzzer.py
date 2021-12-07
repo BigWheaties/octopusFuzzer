@@ -258,48 +258,48 @@ def fuzzDeployment(driver):
         try:
             numOptions = random.randint(0, 5)
             if numOptions != 0:
-            for i in range(numOptions):
-                driver.find_element_by_xpath("").click() 
-                    
-                if i == 0:
-                    optionNameTarget = driver.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/div[5]/div[2]/div/div/div/div[5]/div[2]/div[1]/div/div[1]/div[1]/div/div[1]/div/div/div/input")
-                    optionNameTarget.clear()
-                    optionNameTarget.send_keys(fuzz(0, 50))
-                    optionValueTarget = driver.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/div[5]/div[2]/div/div/div/div[5]/div[2]/div[1]/div/div[1]/div[2]/div/div[1]/div/div/div/input")
-                    optionValueTarget.clear()
-                    optionValueTarget.send_keys(fuzz(0, 50))
-                    
-                elif i == 1:
-                    optionNameTarget = driver.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/div[5]/div[2]/div/div/div/div[5]/div[2]/div[2]/div/div[1]/div[1]/div/div[1]/div/div/div/input")
-                    optionNameTarget.clear()
-                    optionNameTarget.send_keys(fuzz(0, 50))
-                    optionValueTarget = driver.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/div[5]/div[2]/div/div/div/div[5]/div[2]/div[2]/div/div[1]/div[2]/div/div[1]/div/div/div/input")
-                    optionValueTarget.clear()
-                    optionValueTarget.send_keys(fuzz(0, 50))
+                for i in range(numOptions):
+                    driver.find_element_by_xpath("").click() 
                         
-                elif i == 2:
-                    optionNameTarget = driver.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/div[5]/div[2]/div/div/div/div[5]/div[2]/div[3]/div/div[1]/div[1]/div/div[1]/div/div/div/input")
-                    optionNameTarget.clear()
-                    optionNameTarget.send_keys(fuzz(0, 50))
-                    optionValueTarget = driver.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/div[5]/div[2]/div/div/div/div[5]/div[2]/div[3]/div/div[1]/div[2]/div/div[1]/div/div/div/input")
-                    optionValueTarget.clear()
-                    optionValueTarget.send_keys(fuzz(0, 50))                   
-                elif i == 3:
-                    optionNameTarget = driver.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/div[5]/div[2]/div/div/div/div[5]/div[2]/div[4]/div/div[1]/div[1]/div/div[1]/div/div/div/input")
-                    optionNameTarget.clear()
-                    optionNameTarget.send_keys(fuzz(0, 50))
-                    optionValueTarget = driver.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/div[5]/div[2]/div/div/div/div[5]/div[2]/div[4]/div/div[1]/div[2]/div/div[1]/div/div/div/input")
-                    optionValueTarget.clear()
-                    optionValueTarget.send_keys(fuzz(0, 50))                    
-                elif i == 4:
-                    optionNameTarget = driver.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/div[5]/div[2]/div/div/div/div[5]/div[2]/div[5]/div/div[1]/div[1]/div/div[1]/div/div/div/input")
-                    optionNameTarget.clear()
-                    optionNameTarget.send_keys(fuzz(0, 50))
-                    optionValueTarget = driver.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/div[5]/div[2]/div/div/div/div[5]/div[2]/div[5]/div/div[1]/div[2]/div/div[1]/div/div/div/input")
-                    optionValueTarget.clear()
-                    optionValueTarget.send_keys(fuzz(0, 50))
-            except:
-                print("ERROR: FAILED TO PROPERLY CREATE OPTIONS IN DNS CONFIG")
+                    if i == 0:
+                        optionNameTarget = driver.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/div[5]/div[2]/div/div/div/div[5]/div[2]/div[1]/div/div[1]/div[1]/div/div[1]/div/div/div/input")
+                        optionNameTarget.clear()
+                        optionNameTarget.send_keys(fuzz(0, 50))
+                        optionValueTarget = driver.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/div[5]/div[2]/div/div/div/div[5]/div[2]/div[1]/div/div[1]/div[2]/div/div[1]/div/div/div/input")
+                        optionValueTarget.clear()
+                        optionValueTarget.send_keys(fuzz(0, 50))
+                        
+                    elif i == 1:
+                        optionNameTarget = driver.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/div[5]/div[2]/div/div/div/div[5]/div[2]/div[2]/div/div[1]/div[1]/div/div[1]/div/div/div/input")
+                        optionNameTarget.clear()
+                        optionNameTarget.send_keys(fuzz(0, 50))
+                        optionValueTarget = driver.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/div[5]/div[2]/div/div/div/div[5]/div[2]/div[2]/div/div[1]/div[2]/div/div[1]/div/div/div/input")
+                        optionValueTarget.clear()
+                        optionValueTarget.send_keys(fuzz(0, 50))
+                            
+                    elif i == 2:
+                        optionNameTarget = driver.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/div[5]/div[2]/div/div/div/div[5]/div[2]/div[3]/div/div[1]/div[1]/div/div[1]/div/div/div/input")
+                        optionNameTarget.clear()
+                        optionNameTarget.send_keys(fuzz(0, 50))
+                        optionValueTarget = driver.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/div[5]/div[2]/div/div/div/div[5]/div[2]/div[3]/div/div[1]/div[2]/div/div[1]/div/div/div/input")
+                        optionValueTarget.clear()
+                        optionValueTarget.send_keys(fuzz(0, 50))                   
+                    elif i == 3:
+                        optionNameTarget = driver.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/div[5]/div[2]/div/div/div/div[5]/div[2]/div[4]/div/div[1]/div[1]/div/div[1]/div/div/div/input")
+                        optionNameTarget.clear()
+                        optionNameTarget.send_keys(fuzz(0, 50))
+                        optionValueTarget = driver.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/div[5]/div[2]/div/div/div/div[5]/div[2]/div[4]/div/div[1]/div[2]/div/div[1]/div/div/div/input")
+                        optionValueTarget.clear()
+                        optionValueTarget.send_keys(fuzz(0, 50))                    
+                    elif i == 4:
+                        optionNameTarget = driver.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/div[5]/div[2]/div/div/div/div[5]/div[2]/div[5]/div/div[1]/div[1]/div/div[1]/div/div/div/input")
+                        optionNameTarget.clear()
+                        optionNameTarget.send_keys(fuzz(0, 50))
+                        optionValueTarget = driver.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/div[5]/div[2]/div/div/div/div[5]/div[2]/div[5]/div/div[1]/div[2]/div/div[1]/div/div/div/input")
+                        optionValueTarget.clear()
+                        optionValueTarget.send_keys(fuzz(0, 50))
+        except:
+            print("ERROR: FAILED TO PROPERLY CREATE OPTIONS IN DNS CONFIG")
     except:
         print("ERROR: DNS CONFIG FAILED")
     
@@ -398,8 +398,6 @@ def fuzzDeployment(driver):
                     annotationValueTarget = driver.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/div[11]/div[2]/div/div/div/div/div[2]/div[5]/div/div[1]/div[2]/div/div[1]/div/div/div/input")
                     annotationValueTarget.clear()
                     annotationValueTarget.send_keys(fuzz(0, 50))
-            except:
-                print("ERROR: FAILED TO PROPERLY CREATE DEPLOYMENT ANNOTATIONS")
     except:
         print("ERROR: POD ANNOTATION FAILED")
     
@@ -447,8 +445,8 @@ def fuzzDeployment(driver):
                     annotationValueTarget = driver.find_element_by_xpath("/html/body/div[1]/div/div[2]/div/div[12]/div[2]/div/div/div/div/div[2]/div[5]/div/div[1]/div[2]/div/div[1]/div/div/div/input")
                     annotationValueTarget.clear()
                     annotationValueTarget.send_keys(fuzz(0, 50))
-            except:
-                print("ERROR: FAILED TO PROPERLY CREATE DEPLOYMENT ANNOTATIONS")
+    except:
+        print("ERROR: FAILED TO PROPERLY CREATE DEPLOYMENT ANNOTATIONS")
     
     # manage service account name
     try:
@@ -484,7 +482,11 @@ import random
 loopCounter = 0
 
 # get user input
-numFilesNeeded = int(sys.argv[1])
+if len(sys.argv) != 2:
+    print("ERROR: INCORRECT NUMBER OF ARGUMENTS")
+    exit()
+else:
+    numFilesNeeded = int(sys.argv[1])
 
 # generate random seed
 random.seed()
