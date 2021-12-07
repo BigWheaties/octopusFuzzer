@@ -1,5 +1,5 @@
 #input: python3 octopusFuzzer.py numFiles
-
+    
 ''' Declare functions '''
 # a function to expand all container divs on the page
 def expandDivs():
@@ -475,6 +475,7 @@ def fuzzDaemonSet():
 ''' Main program '''
 # import libraries
 import selenium 
+from selenium import webdriver
 import sys
 import random
 
@@ -496,11 +497,10 @@ while loopCounter < numFilesNeeded:
     print("Generating file " + str(loopCounter) + "...")
 
     # initiate Selenium objects
-    driver = webdriver.Firefox()
+    driver = webdriver.Edge()
 
     # get page for fuzzing
     driver.get("https://k8syaml.com/")
-    
     # call the fuzzing function
     fuzzDeployment(driver)
     ''' IMPLEMENT AT A LATER DATE
